@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reportes Ambientales | NASA Earth Guardian</title>
+    <!-- Librería Chart.js para gráficos interactivos -->
+    <script src="https://jsdelivr.net"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #f0f5f2;
+            color: #103d30;
+        }
+
+        /* BARRA SUPERIOR */
+        .navbar {
+            background: linear-gradient(135deg, #092e25, #126b49);
+            color: white;
+            padding: 16px 35px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 20px;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+
+        .navbar-links {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn-nav {
+            background-color: rgba(255, 255, 255, 0.15);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .btn-nav:hover, .btn-nav.activo {
+            background-color: #087c50;
+        }
+
+        .btn-logout:hover {
+            background-color: #d9534f;
+        }
+
+        /* CONTENEDOR PRINCIPAL */
+        .reportes-container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .header-reporte {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .header-reporte h1 {
+            font-size: 28px;
+            color: #103d30;
+        }
+
+        .header-reporte p {
+            color: #556b61;
+            font-size: 14px;
+            margin-top: 4px;
+        }
+
+        .btn-imprimir {
+            background-color: #126b49;
+            color: white;
+            border: none;
+            padding: 12px 22px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 12px rgba(18, 107, 73, 0.25);
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        .btn-imprimir:hover {
+            background-color: #087c50;
+            transform: translateY(-2px);
+        }
+
+        /* TARJETAS DE INDICADORES */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-bottom: 28px;
+        }
+
+        .kpi-card {
+            background: white;
+            padding: 20px 22px;
+            border-radius: 14px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.05);
+            border-top: 4px solid #159b64;
+        }
+
+        .kpi-card.alerta {
+            border-top-color: #d9534f;
+        }
+
+        .kpi-card span {
+            font-size: 12px;
+            font-weight: bold;
+            color: #68766e;
+            text-transform: uppercase;
+        }
+
+        .kpi-card h2 {
+            font-size: 30px;
+            margin-top: 8px;
+            color: #103d30;
+        }
+
+        .kpi-card small {
+            display: block;
+            margin-top: 6px;
+            font-size: 12px;
+            color: #159b64;
+        }
+
+        /* CUADRÍCULA DE GRÁFICOS */
+        .graficos-grid {
+            display: grid;
+            grid-template-columns: 1.4fr 1fr;
+            gap: 24px;
+            margin-bottom: 28px;
+        }
+
+        .caja-panel {
+            background: white;
+            padding: 26px;
+            border-radius: 16px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.05);
+        }
+
+        .caja-panel h3 {
+            font-size: 17px;
+            color: #103d30;
+            margin-bottom: 18px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eef8f4;
+        }
+
+        .canvas-wrapper {
+            position: relative;
+            height: 280px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* TABLA DE RESUMEN POR ZONA */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        th {
+            background-color: #f4f9f6;
+            color: #103d30;
+            text-align: left;
+            padding: 12px 15px;
+            font-weight: bold;
+            border-bottom: 2px solid #e1ece6;
+        }
+
+        td {
+            padding: 14px 15px;
+            border-bottom: 1px solid #eef3f0;
+            color: #333;
+        }
+
+        .estado-tag {
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .estado-critico { background: #fdecea; color: #b71c1c; }
+        .estado-controlado { background: #e8f5e9; color: #1b5e20; }
+        .estado-proceso { background: #fff8e1; color: #b28704; }
+
+        /* ESTILOS ESPECIALES AL IMPRIMIR / GUARDAR PDF */
+        @media print {
+            .navbar, .btn-imprimir {
+                display: none !important;
+            }
+            body {
+                background: white;
+            }
+            .caja-panel, .kpi-card {
+                box-shadow: none;
+                border: 1px solid #ddd;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .kpi-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .graficos-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- BARRA DE NAVEGACIÓN -->
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <span>🌎</span>
+            <span>NASA EARTH GUARDIAN</span>
+        </div>
+
+        <div class="navbar-links">
+            <a href="index.html" class="btn-nav">Inicio</a>
+            <a href="dashboard.html" class="btn-nav">Panel de Control</a>
+            <a href="reportes.html" class="btn-nav activo">Reportes</a>
+            <a href="login.html" class="btn-nav btn-logout">Cerrar sesión</a>
+        </div>
+    </nav>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <div class="reportes-container">
+
+        <div class="header-reporte">
+            <div>
+                <h1>Informe de Monitoreo Ambiental</h1>
+                <p>Análisis estadístico consolidado de incidentes y estado ecológico.</p>
+            </div>
+
+            <button class="btn-imprimir" onclick="window.print()">
+                <span>🖨️</span> Imprimir / Guardar PDF
+            </button>
+        </div>
+
+        <!-- INDICADORES CLAVE -->
+        <div class="kpi-grid">
+            <div class="kpi-card">
+                <span>Reportes del mes</span>
+                <h2>24</h2>
+                <small>↑ 12% respecto al mes anterior</small>
+            </div>
+
+            <div class="kpi-card alerta">
+                <span>Casos críticos</span>
+                <h2 style="color: #d9534f;">5</h2>
+                <small style="color: #d9534f;">Requieren atención inmediata</small>
+            </div>
+
+            <div class="kpi-card">
+                <span>Eventos resueltos</span>
+                <h2>16</h2>
+                <small>66.7% de efectividad</small>
+            </div>
+
+            <div class="kpi-card">
+                <span>Zonas monitoreadas</span>
+                <h2>8</h2>
+                <small>Cobertura satelital activa</small>
+            </div>
+        </div>
+
+        <!-- GRÁFICOS ESTADÍSTICOS -->
+        <div class="graficos-grid">
+            <div class="caja-panel">
+                <h3>Incidentes por Categoría Ambiental</h3>
+                <div class="canvas-wrapper">
+                    <canvas id="graficoCategorias"></canvas>
+                </div>
+            </div>
+
+            <div class="caja-panel">
+                <h3>Distribución por Nivel de Gravedad</h3>
+                <div class="canvas-wrapper">
+                    <canvas id="graficoGravedad"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- TABLA CONSOLIDADA -->
+        <div class="caja-panel">
+            <h3>Resumen de Zonas Prioritarias</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Zona / Reserva</th>
+                        <th>Principal Amenaza</th>
+                        <th>Alertas Activas</th>
+                        <th>Última Actualización</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Reserva Natural Sur</strong></td>
+                        <td>Incendio Forestal</td>
+                        <td>3</td>
+                        <td>Hoy, 14:20</td>
+                        <td><span class="estado-tag estado-critico">Atención Crítica</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Cuenca Hidrográfica Alta</strong></td>
+                        <td>Contaminación de Agua</td>
+                        <td>2</td>
+                        <td>Ayer, 18:05</td>
+                        <td><span class="estado-tag estado-proceso">En Monitoreo</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Bosque El Mirador</strong></td>

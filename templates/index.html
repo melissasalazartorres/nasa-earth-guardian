@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio | NASA Earth Guardian</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #f0f5f2;
+            color: #103d30;
+            padding: 30px 20px;
+        }
+
+        .contenedor-principal {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .inicio-hero {
+            background: white;
+            padding: 45px;
+            border-radius: 18px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            gap: 35px;
+            box-shadow: 0 8px 25px rgba(0,0,0,.06);
+            margin-bottom: 30px;
+        }
+
+        .etiqueta {
+            color: #159b64;
+            font-weight: bold;
+            letter-spacing: 1px;
+            font-size: 13px;
+            margin-bottom: 10px;
+        }
+
+        .inicio-hero h1 {
+            font-size: 40px;
+            line-height: 1.2;
+            margin: 10px 0 18px 0;
+            color: #103d30;
+        }
+
+        .inicio-hero h1 span {
+            color: #159b64;
+        }
+
+        .inicio-hero p.descripcion {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 28px;
+            font-size: 15px;
+        }
+
+        .hero-botones {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn-principal {
+            background-color: #126b49;
+            color: white;
+            padding: 13px 26px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-block;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        .btn-principal:hover {
+            background-color: #087c50;
+            transform: translateY(-2px);
+        }
+
+        .btn-secundario {
+            background-color: transparent;
+            color: #126b49;
+            border: 2px solid #126b49;
+            padding: 11px 24px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-block;
+            transition: all 0.3s;
+        }
+
+        .btn-secundario:hover {
+            background-color: #eef8f4;
+        }
+
+        .inicio-planeta {
+            background: linear-gradient(145deg, #103d30, #087c50);
+            padding: 55px 20px;
+            text-align: center;
+            border-radius: 16px;
+            color: white;
+        }
+
+        .inicio-planeta .earth {
+            font-size: 100px;
+            line-height: 1;
+        }
+
+        .inicio-planeta h2 {
+            color: white;
+            margin-top: 15px;
+            margin-bottom: 10px;
+            font-size: 22px;
+        }
+
+        .inicio-planeta p {
+            color: #d6f3e5;
+            font-size: 14px;
+        }
+
+        .estadisticas {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .tarjeta {
+            background: white;
+            padding: 25px 30px;
+            border-radius: 16px;
+            box-shadow: 0 8px 25px rgba(0,0,0,.06);
+            border-left: 5px solid #159b64;
+            transition: transform 0.2s;
+        }
+
+        .tarjeta:hover {
+            transform: translateY(-4px);
+        }
+
+        .tarjeta p {
+            color: #666;
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .tarjeta h2 {
+            color: #103d30;
+            font-size: 36px;
+        }
+
+        .tarjeta.critica {
+            border-left-color: #d9534f;
+        }
+
+        .tarjeta.critica h2 {
+            color: #d9534f;
+        }
+
+        @media(max-width: 750px) {
+            .inicio-hero {
+                grid-template-columns: 1fr;
+                padding: 25px;
+            }
+
+            .inicio-hero h1 {
+                font-size: 30px;
+            }
+
+            .estadisticas {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="contenedor-principal">
+
+        <section class="inicio-hero">
+
+            <div>
+                <p class="etiqueta">PROTECCIÓN AMBIENTAL</p>
+
+                <h1>
+                    Protejamos juntos
+                    nuestro <span>planeta.</span>
+                </h1>
+
+                <p class="descripcion">
+                    NASA Earth Guardian permite registrar y administrar
+                    información sobre eventos ambientales, contribuyendo
+                    al seguimiento y protección de nuestro entorno.
+                </p>
+
+                <div class="hero-botones">
+                    <a href="registro.html" class="btn-principal">
+                        Crear cuenta
+                    </a>
+
+                    <a href="login.html" class="btn-secundario">
+                        Iniciar sesión
+                    </a>
+                </div>
+            </div>
+
+            <div class="inicio-planeta">
+                <div class="earth">🌎</div>
+                <h2>NASA EARTH GUARDIAN</h2>
+                <p>Tecnología para un futuro sostenible.</p>
+            </div>
+
+        </section>
+
+        <section class="estadisticas">
+
+            <div class="tarjeta">
+                <p>Alertas registradas</p>
+                <h2>0</h2>
+            </div>
+
+            <div class="tarjeta">
+                <p>Usuarios registrados</p>
+                <h2>0</h2>
+            </div>
+
+            <div class="tarjeta critica">
+                <p>Alertas críticas</p>
+                <h2>0</h2>
+            </div>
+
+        </section>
+
+    </div>
+
+</body>
+</html>

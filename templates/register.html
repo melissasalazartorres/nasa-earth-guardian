@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Cuenta | NASA Earth Guardian</title>
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #092e25, #126b49, #0b392e);
+        }
+        .registro-container {
+            width: 100%;
+            max-width: 950px;
+            min-height: 580px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.30);
+        }
+        .registro-left {
+            background: linear-gradient(145deg, #103d30, #087c50);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 40px;
+        }
+        .earth-icon { font-size: 105px; margin-bottom: 20px; }
+        .registro-left h1 { font-size: 28px; margin-bottom: 15px; letter-spacing: 1px; }
+        .registro-left p { font-size: 15px; line-height: 1.7; color: #d6f3e5; max-width: 330px; }
+        .line { width: 65px; height: 4px; background: #71e6a7; margin: 25px auto; border-radius: 10px; }
+        .registro-right {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 45px 45px;
+        }
+        .registro-right h2 { color: #173c30; font-size: 30px; text-align: center; margin-bottom: 8px; }
+        .subtitle { color: #7b8981; text-align: center; font-size: 14px; margin-bottom: 25px; }
+        .form-group { margin-bottom: 18px; }
+        .form-group label { display: block; color: #344b40; font-size: 14px; font-weight: bold; margin-bottom: 8px; }
+        .form-group input {
+            width: 100%; height: 46px; padding: 0 15px; border: 1px solid #d9e4dd;
+            border-radius: 8px; outline: none; font-size: 14px; background: #f9fcfa; transition: 0.3s;
+        }
+        .form-group input:focus { border-color: #169c65; box-shadow: 0 0 0 3px rgba(22,156,101,0.12); }
+        .registro-button {
+            width: 100%; height: 50px; background: #159b64; border: none; border-radius: 8px;
+            color: white; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 8px; transition: 0.3s;
+        }
+        .registro-button:hover { background: #10794d; transform: translateY(-2px); }
+        .login-link { text-align: center; margin-top: 22px; font-size: 14px; color: #7b8981; }
+        .login-link a { color: #15965f; text-decoration: none; font-weight: bold; }
+        .login-link a:hover { text-decoration: underline; }
+        .volver-inicio { text-align: center; margin-top: 12px; font-size: 13px; }
+        .volver-inicio a { color: #68766e; text-decoration: none; }
+        .volver-inicio a:hover { color: #15965f; }
+        .footer { text-align: center; color: #9aa69f; font-size: 11px; margin-top: 25px; }
+        @media (max-width: 700px) {
+            .registro-container { grid-template-columns: 1fr; max-width: 430px; }
+            .registro-left { padding: 30px 20px; }
+            .earth-icon { font-size: 65px; }
+            .registro-left h1 { font-size: 23px; }
+            .registro-right { padding: 35px 25px; }
+            .registro-right h2 { font-size: 25px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="registro-container">
+        <section class="registro-left">
+            <div class="earth-icon">🌎</div>
+            <h1>NASA EARTH GUARDIAN</h1>
+            <div class="line"></div>
+            <p>
+                Únete a nuestra comunidad global y participa activamente
+                en el monitoreo y protección de nuestro planeta.
+            </p>
+        </section>
+
+        <section class="registro-right">
+            <h2>Crear cuenta</h2>
+            <p class="subtitle">Completa tus datos para registrarte</p>
+
+            <form action="login.html" method="GET">
+                <div class="form-group">
+                    <label for="nombre">Nombre completo</label>
+                    <input type="text" id="nombre" name="nombre" placeholder="Ingresa tus nombres y apellidos" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="correo">Correo electrónico</label>
+                    <input type="email" id="correo" name="correo" placeholder="correo@ejemplo.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <input type="password" id="password" name="password" placeholder="Crea una contraseña (mínimo 8 caracteres)" minlength="8" required>
+                </div>
+
+                <button type="submit" class="registro-button">
+                    Registrar usuario
+                </button>
+            </form>
+
+            <div class="login-link">
+                ¿Ya tienes una cuenta?
+                <a href="login.html">Inicia sesión</a>
+            </div>
+
+            <div class="volver-inicio">
+                <a href="index.html">← Volver al inicio</a>
+            </div>
+
+            <div class="footer">
+                NASA EARTH GUARDIAN © 2026
+                <br>
+                Sistema de monitoreo y protección ambiental
+            </div>
+        </section>
+    </div>
+
+</body>
+</html>

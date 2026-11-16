@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Alerta | NASA Earth Guardian</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #f0f5f2;
+            color: #103d30;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .editar-caja {
+            background: white;
+            width: 100%;
+            max-width: 520px;
+            padding: 35px;
+            border-radius: 18px;
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.08);
+            border-top: 6px solid #159b64;
+        }
+
+        .editar-caja h2 {
+            color: #103d30;
+            font-size: 24px;
+            margin-bottom: 6px;
+        }
+
+        .subtitulo {
+            color: #68766e;
+            font-size: 13px;
+            margin-bottom: 22px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            font-size: 13px;
+            font-weight: bold;
+            color: #344b40;
+            margin-bottom: 7px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 11px 14px;
+            border: 1px solid #d9e4dd;
+            border-radius: 8px;
+            font-size: 14px;
+            background: #f9fcfa;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #159b64;
+            box-shadow: 0 0 0 3px rgba(21, 155, 100, 0.12);
+        }
+
+        .botones {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .btn-guardar {
+            flex: 1;
+            padding: 13px;
+            background-color: #159b64;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn-guardar:hover {
+            background-color: #10794d;
+        }
+
+        .btn-cancelar {
+            padding: 13px 22px;
+            background-color: #eef3f0;
+            color: #344b40;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: bold;
+            text-align: center;
+            transition: background 0.3s;
+        }
+
+        .btn-cancelar:hover {
+            background-color: #dce5df;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="editar-caja">
+        <h2>Editar Alerta Ambiental #{{ alerta['id'] }}</h2>
+        <p class="subtitulo">Actualiza los datos del reporte registrado en la base de datos.</p>
+
+        <form action="{{ url_for('editar_alerta', id=alerta['id']) }}" method="POST">
+            
+            <div class="form-group">
+                <label for="titulo">Título del evento</label>
+                <input type="text" id="titulo" name="titulo" value="{{ alerta['titulo'] }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="ubicacion">Ubicación / Zona</label>
+                <input type="text" id="ubicacion" name="ubicacion" value="{{ alerta['ubicacion'] }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="categoria">Categoría ambiental</label>
+                <select id="categoria" name="categoria" required>
+                    <option value="Incendio Forestal" {% if alerta['categoria'] == 'Incendio Forestal' %}selected{% endif %}>Incendio Forestal</option>
+                    <option value="Contaminación de Agua" {% if alerta['categoria'] == 'Contaminación de Agua' %}selected{% endif %}>Contaminación de Agua</option>
+                    <option value="Deforestación" {% if alerta['categoria'] == 'Deforestación' %}selected{% endif %}>Deforestación</option>
+                    <option value="Calidad del Aire" {% if alerta['categoria'] == 'Calidad del Aire' %}selected{% endif %}>Calidad del Aire</option>
+                    <option value="Otro" {% if alerta['categoria'] == 'Otro' %}selected{% endif %}>Otro evento</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="gravedad">Nivel de gravedad</label>
+                <select id="gravedad" name="gravedad" required>
+                    <option value="Alta" {% if alerta['gravedad'] == 'Alta' %}selected{% endif %}>Alta (Crítica)</option>
+                    <option value="Media" {% if alerta['gravedad'] == 'Media' %}selected{% endif %}>Media</option>
+                    <option value="Baja" {% if alerta['gravedad'] == 'Baja' %}selected{% endif %}>Baja</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="descripcion">Descripción</label>
+                <textarea id="descripcion" name="descripcion" rows="3">{{ alerta['descripcion'] or '' }}</textarea>
+            </div>
+
+            <div class="botones">
+                <button type="submit" class="btn-guardar">Guardar cambios</button>
+                <a href="{{ url_for('dashboard') }}" class="btn-cancelar">Cancelar</a>
+            </div>
+
+        </form>
+    </div>
+
+</body>
+</html>
