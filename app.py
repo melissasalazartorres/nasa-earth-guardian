@@ -96,7 +96,7 @@ def registro():
         finally:
             conn.close()
 
-    return render_template("registrar.html")
+    return render_template("registro")
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
